@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zarro Team</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1a0d2b, #07030d);
+      color: white;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* фоновые частицы */
+    .bg-blur {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: rgba(170, 0, 255, 0.25);
+      filter: blur(150px);
+      border-radius: 50%;
+      z-index: -2;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .bg-blur.two {
+      width: 500px;
+      height: 500px;
+      background: rgba(0, 150, 255, 0.20);
+      top: 50%;
+      left: 60%;
+      animation-delay: 1.5s;
+    }
+
+    .bg-blur.one {
+      top: 10%;
+      left: 10%;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px) translateX(0px); }
+      to { transform: translateY(50px) translateX(30px); }
+    }
+
+    /* контейнер */
+    .container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px 15px;
+      transition: 0.4s ease;
+    }
+
+    /* заголовок */
+    .title {
+      font-size: 70px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-align: center;
+      background: linear-gradient(90deg, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 0px 25px rgba(170, 0, 255, 0.25);
+      animation: fadeDown 1s ease;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: 0.7;
+      text-align: center;
+      animation: fadeDown 1.2s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* кнопки главной */
+    .main-buttons {
+      margin-top: 60px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      padding: 18px 35px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+      backdrop-filter: blur(12px);
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      border: 1px solid rgba(255,255,255,0.35);
+      box-shadow: 0px 0px 35px rgba(170, 0, 255, 0.3);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(170,0,255,0.35), rgba(0,140,255,0.25));
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      top: -80px;
+      left: -80px;
+      filter: blur(20px);
+      transition: 0.4s ease;
+    }
+
+    .btn:hover::after {
+      top: -40px;
+      left: -40px;
+    }
+
+    /* секции */
+    .section {
+      width: 100%;
+      max-width: 1100px;
+      margin-top: 60px;
+      display: none;
+      flex-direction: column;
+      animation: sectionAnim 0.5s ease;
+    }
+
+    @keyframes sectionAnim {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0px); }
+    }
+
+    .section.active {
+      display: flex;
+    }
+
+    /* кнопка назад */
+    .back-btn {
+      width: fit-content;
+      margin-bottom: 25px;
+      padding: 12px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      border: 1px solid rgba(255,255,255,0.30);
+      box-shadow: 0px 0px 25px rgba(170, 0, 255, 0.25);
+    }
+
+    /* товары */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0px 0px 25px rgba(0,0,0,0.5);
+      transition: 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0px 0px 40px rgba(170, 0, 255, 0.25);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(170,0,255,0.15);
+      top: -60px;
+      right: -60px;
+      filter: blur(25px);
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      opacity: 0.75;
+      line-height: 1.5;
+    }
+
+    .card-tag {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    /* модальное окно */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 15px;
+      animation: fadeOverlay 0.3s ease;
+    }
+
+    @keyframes fadeOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 8, 30, 0.95);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 22px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0px 0px 55px rgba(170, 0, 255, 0.35);
+      animation: modalIn 0.3s ease;
+      position: relative;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0px) scale(1); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+      transition: 0.2s ease;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.05);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .plans {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .plan {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-2px);
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0px 0px 25px rgba(0, 140, 255, 0.20);
+    }
+
+    .plan span {
+      font-weight: 700;
+    }
+
+    .price {
+      font-size: 15px;
+      font-weight: 800;
+      opacity: 0.9;
+      background: linear-gradient(90deg, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .modal-footer {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.6;
+      text-align: center;
+    }
+
+    /* адаптация */
+    @media (max-width: 520px) {
+      .title {
+        font-size: 52px;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .main-buttons {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-blur one"></div>
+  <div class="bg-blur two"></div>
+
+  <div class="container">
+
+    <!-- Главная -->
+    <div id="homeSection" class="section active">
+      <div class="title">Zarro Team</div>
+      <div class="subtitle">Элегантный магазин подписок ZarroClient</div>
+
+      <div class="main-buttons">
+        <button class="btn primary" onclick="openProducts()">Доступные товары</button>
+        <button class="btn" onclick="openTelegram()">Телеграм канал</button>
+      </div>
+    </div>
+
+    <!-- Товары -->
+    <div id="productsSection" class="section">
+      <div class="back-btn" onclick="goHome()">← Назад</div>
+
+      <div class="products-grid">
+        <div class="card" onclick="openModal('vimeworld')">
+          <div class="card-title">ZarroClient (VimeWorld)</div>
+          <div class="card-desc">
+            Подписка на ZarroClient для VimeWorld. Максимальная стабильность, плавность и стиль.
+          </div>
+          <div class="card-tag">VimeWorld Edition</div>
+        </div>
+
+        <div class="card" onclick="openModal('minecraft')">
+          <div class="card-title">ZarroClient (Minecraft)</div>
+          <div class="card-desc">
+            Версия клиента для Minecraft. Оптимизация, удобство, интерфейс и мощный функционал.
+          </div>
+          <div class="card-tag">Minecraft Edition</div>
+        </div>
+
+        <div class="card" onclick="openModal('full')">
+          <div class="card-title">ZarroClient (FULL)</div>
+          <div class="card-desc">
+            Полный доступ ко всем версиям. Лучший выбор для тех, кто хочет всё и сразу.
+          </div>
+          <div class="card-tag">Ultimate Access</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Модалка -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <div id="modalTitle" class="modal-title">ZarroClient</div>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+
+      <div id="modalPlans" class="plans"></div>
+
+      <div class="modal-footer">
+        Выберите тариф. После выбора можно добавить оплату или ссылку на продавца.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const homeSection = document.getElementById("homeSection");
+    const productsSection = document.getElementById("productsSection");
+
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalPlans = document.getElementById("modalPlans");
+
+    const productsData = {
+      vimeworld: {
+        title: "ZarroClient (VimeWorld)",
+        plans: [
+          { name: "30 дней", price: "499₽" },
+          { name: "60 дней", price: "799₽" },
+          { name: "90 дней", price: "1111₽" }
+        ]
+      },
+      minecraft: {
+        title: "ZarroClient (Minecraft)",
+        plans: [
+          { name: "60 дней", price: "399₽" },
+          { name: "90 дней", price: "699₽" },
+          { name: "Навсегда", price: "1000₽" }
+        ]
+      },
+      full: {
+        title: "ZarroClient (FULL)",
+        plans: [
+          { name: "30 дней", price: "699₽" },
+          { name: "60 дней", price: "999₽" },
+          { name: "90 дней", price: "1499₽" }
+        ]
+      }
+    };
+
+    function openProducts() {
+      homeSection.classList.remove("active");
+      productsSection.classList.add("active");
+    }
+
+    function goHome() {
+      productsSection.classList.remove("active");
+      homeSection.classList.add("active");
+    }
+
+    function openTelegram() {
+      // ВСТАВЬ СЮДА СВОЮ ССЫЛКУ НА ТГ КАНАЛ
+      window.open("https://t.me/your_channel_here", "_blank");
+    }
+
+    function openModal(productKey) {
+      const product = productsData[productKey];
+      if (!product) return;
+
+      modalTitle.innerText = product.title;
+      modalPlans.innerHTML = "";
+
+      product.plans.forEach(plan => {
+        const div = document.createElement("div");
+        div.className = "plan";
+        div.innerHTML = `
+          <span>${plan.name}</span>
+          <div class="price">${plan.price}</div>
+        `;
+
+        div.onclick = () => {
+          alert("Вы выбрали: " + product.title + " | " + plan.name + " - " + plan.price);
+        };
+
+        modalPlans.appendChild(div);
+      });
+
+      modalOverlay.classList.add("active");
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove("active");
+    }
+
+    function closeModalOutside(event) {
+      if (event.target === modalOverlay) {
+        closeModal();
+      }
+    }
+
+    // Закрытие ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+
+</body>
+  </html>
