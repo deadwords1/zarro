@@ -211,6 +211,7 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      min-height: 190px;
     }
 
     .card:hover {
@@ -252,6 +253,37 @@
       border: 1px solid rgba(255,255,255,0.12);
       font-size: 13px;
       opacity: 0.85;
+    }
+
+    /* verified статус */
+    .verified {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.85;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .verified-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #33ff66;
+      box-shadow: 0px 0px 8px rgba(51, 255, 102, 0.8),
+                  0px 0px 18px rgba(51, 255, 102, 0.55),
+                  0px 0px 35px rgba(51, 255, 102, 0.35);
+      animation: pulseGlow 1.6s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
     }
 
     /* модальное окно */
@@ -402,6 +434,11 @@
             Подписка на ZarroClient для VimeWorld. Максимальная стабильность, плавность и стиль.
           </div>
           <div class="card-tag">VimeWorld Edition</div>
+
+          <div class="verified">
+            <div class="verified-dot"></div>
+            <div class="verified-text" data-date="true">[Дата] Проверено, работает</div>
+          </div>
         </div>
 
         <div class="card" onclick="openModal('minecraft')">
@@ -410,6 +447,11 @@
             Версия клиента для Minecraft. Оптимизация, удобство, интерфейс и мощный функционал.
           </div>
           <div class="card-tag">Minecraft Edition</div>
+
+          <div class="verified">
+            <div class="verified-dot"></div>
+            <div class="verified-text" data-date="true">[Дата] Проверено, работает</div>
+          </div>
         </div>
 
         <div class="card" onclick="openModal('full')">
@@ -418,6 +460,11 @@
             Полный доступ ко всем версиям. Лучший выбор для тех, кто хочет всё и сразу.
           </div>
           <div class="card-tag">Ultimate Access</div>
+
+          <div class="verified">
+            <div class="verified-dot"></div>
+            <div class="verified-text" data-date="true">[Дата] Проверено, работает</div>
+          </div>
         </div>
       </div>
     </div>
@@ -540,6 +587,21 @@
 
       closeModal();
     }
+
+    function setCurrentDateVerified() {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, "0");
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const year = now.getFullYear();
+
+      const formatted = `[${day}.${month}.${year}] Проверено, работает`;
+
+      document.querySelectorAll("[data-date='true']").forEach(el => {
+        el.innerText = formatted;
+      });
+    }
+
+    setCurrentDateVerified();
 
     // Закрытие ESC
     document.addEventListener("keydown", (e) => {
