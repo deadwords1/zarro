@@ -21,56 +21,44 @@
       min-height: 100vh;
     }
 
-    /* PARTCILES */
-    #particles-js {
+    /* ====== ЗЕРНО / ШУМ ====== */
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -5;
-      opacity: 0.7;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/Noise.png");
+      opacity: 0.06;
       pointer-events: none;
-    }
-
-    /* ЗЕРНО / NOISE */
-    .grain {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.12;
+      z-index: 9999;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-      animation: grainMove 2.5s steps(6) infinite;
+      animation: grainMove 6s infinite linear;
     }
 
     @keyframes grainMove {
-      0% { transform: translate(0, 0); }
-      20% { transform: translate(-15px, 10px); }
-      40% { transform: translate(10px, -20px); }
-      60% { transform: translate(-25px, -10px); }
-      80% { transform: translate(20px, 15px); }
-      100% { transform: translate(0, 0); }
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-10px, 8px); }
+      50% { transform: translate(6px, -6px); }
+      75% { transform: translate(-4px, -10px); }
+      100% { transform: translate(0,0); }
     }
 
-    /* фоновые блуры */
+    /* фоновые свечения */
     .bg-blur {
       position: fixed;
-      width: 400px;
-      height: 400px;
+      width: 450px;
+      height: 450px;
       background: rgba(170, 0, 255, 0.25);
-      filter: blur(150px);
+      filter: blur(170px);
       border-radius: 50%;
-      z-index: -3;
+      z-index: -2;
       animation: float 10s ease-in-out infinite alternate;
-      pointer-events: none;
     }
 
     .bg-blur.two {
-      width: 500px;
-      height: 500px;
+      width: 550px;
+      height: 550px;
       background: rgba(0, 150, 255, 0.20);
-      top: 50%;
+      top: 55%;
       left: 60%;
       animation-delay: 1.5s;
     }
@@ -82,7 +70,15 @@
 
     @keyframes float {
       from { transform: translateY(0px) translateX(0px); }
-      to { transform: translateY(50px) translateX(30px); }
+      to { transform: translateY(60px) translateX(40px); }
+    }
+
+    /* ====== ЧАСТИЦЫ ====== */
+    canvas#particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* контейнер */
@@ -113,7 +109,7 @@
     .subtitle {
       margin-top: 10px;
       font-size: 16px;
-      opacity: 0.75;
+      opacity: 0.7;
       text-align: center;
       animation: fadeDown 1.2s ease;
     }
@@ -152,13 +148,12 @@
       box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
       position: relative;
       overflow: hidden;
-      transform: translateZ(0);
     }
 
     .btn:hover {
-      transform: translateY(-6px) scale(1.05);
+      transform: translateY(-4px) scale(1.03);
       border: 1px solid rgba(255,255,255,0.35);
-      box-shadow: 0px 0px 45px rgba(170, 0, 255, 0.35);
+      box-shadow: 0px 0px 35px rgba(170, 0, 255, 0.3);
     }
 
     .btn:active {
@@ -166,13 +161,8 @@
     }
 
     .btn.primary {
-      background: linear-gradient(135deg, rgba(170,0,255,0.40), rgba(0,140,255,0.30));
+      background: linear-gradient(135deg, rgba(170,0,255,0.35), rgba(0,140,255,0.25));
       border: 1px solid rgba(255,255,255,0.20);
-    }
-
-    .btn.secondary {
-      background: linear-gradient(135deg, rgba(0,255,140,0.18), rgba(0,140,255,0.18));
-      border: 1px solid rgba(255,255,255,0.18);
     }
 
     .btn::after {
@@ -184,7 +174,7 @@
       border-radius: 50%;
       top: -90px;
       left: -90px;
-      filter: blur(25px);
+      filter: blur(20px);
       transition: 0.4s ease;
     }
 
@@ -200,12 +190,12 @@
       margin-top: 60px;
       display: none;
       flex-direction: column;
-      animation: sectionAnim 0.55s ease;
+      animation: sectionAnim 0.5s ease;
     }
 
     @keyframes sectionAnim {
-      from { opacity: 0; transform: translateY(20px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0px) scale(1); }
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0px); }
     }
 
     .section.active {
@@ -222,29 +212,27 @@
       background: rgba(255,255,255,0.05);
       cursor: pointer;
       transition: 0.25s ease;
-      font-weight: 800;
+      font-weight: 700;
       opacity: 0.9;
-      position: relative;
-      overflow: hidden;
     }
 
     .back-btn:hover {
-      transform: translateY(-4px) scale(1.03);
+      transform: translateY(-2px);
       border: 1px solid rgba(255,255,255,0.30);
-      box-shadow: 0px 0px 35px rgba(170, 0, 255, 0.25);
+      box-shadow: 0px 0px 25px rgba(170, 0, 255, 0.25);
     }
 
-    /* разделы */
-    .category-title {
-      font-size: 22px;
+    /* заголовки блоков */
+    .block-title {
+      font-size: 20px;
       font-weight: 900;
-      margin: 25px 0 15px 5px;
-      background: linear-gradient(90deg, #c084fc, #60a5fa);
+      margin: 10px 0 18px 0;
+      opacity: 0.95;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, rgba(192,132,252,0.9), rgba(96,165,250,0.9));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      opacity: 0.95;
-      letter-spacing: 0.5px;
-      animation: fadeUp 0.6s ease;
     }
 
     /* товары */
@@ -252,6 +240,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 22px;
+      margin-bottom: 40px;
     }
 
     .card {
@@ -260,61 +249,36 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(14px);
-      box-shadow: 0px 0px 25px rgba(0,0,0,0.55);
-      transition: 0.30s ease;
+      box-shadow: 0px 0px 25px rgba(0,0,0,0.5);
+      transition: 0.25s ease;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      min-height: 200px;
-      transform: translateZ(0);
-      animation: cardAppear 0.55s ease;
+      animation: cardIdle 3.5s ease-in-out infinite;
     }
 
-    @keyframes cardAppear {
-      from { opacity: 0; transform: translateY(25px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0px) scale(1); }
+    @keyframes cardIdle {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+      100% { transform: translateY(0px); }
     }
 
     .card:hover {
-      transform: translateY(-10px) scale(1.04);
+      transform: translateY(-10px) scale(1.03);
       border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: 0px 0px 55px rgba(170, 0, 255, 0.35);
+      box-shadow: 0px 0px 45px rgba(170, 0, 255, 0.28);
     }
 
     .card::before {
       content: "";
       position: absolute;
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      background: rgba(170,0,255,0.18);
-      top: -70px;
-      right: -70px;
-      filter: blur(30px);
-      transition: 0.35s ease;
-    }
-
-    .card:hover::before {
-      transform: scale(1.35);
-      opacity: 0.9;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 200px;
-      height: 400px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      transform: rotate(25deg);
-      top: -150px;
-      left: -220px;
-      transition: 0.7s ease;
-      opacity: 0;
-    }
-
-    .card:hover::after {
-      left: 400px;
-      opacity: 1;
+      background: rgba(170,0,255,0.15);
+      top: -60px;
+      right: -60px;
+      filter: blur(25px);
     }
 
     .card-title {
@@ -325,7 +289,7 @@
 
     .card-desc {
       font-size: 14px;
-      opacity: 0.78;
+      opacity: 0.75;
       line-height: 1.5;
     }
 
@@ -337,17 +301,11 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       font-size: 13px;
-      opacity: 0.9;
-      transition: 0.25s ease;
+      opacity: 0.85;
     }
 
-    .card:hover .card-tag {
-      transform: scale(1.06);
-      box-shadow: 0px 0px 25px rgba(0,140,255,0.22);
-    }
-
-    /* статус */
-    .verified {
+    /* статус снизу */
+    .status-line {
       position: absolute;
       bottom: 14px;
       left: 16px;
@@ -355,33 +313,29 @@
       align-items: center;
       gap: 8px;
       font-size: 12px;
-      font-weight: 800;
-      opacity: 0.88;
-      color: rgba(255,255,255,0.88);
+      font-weight: 700;
+      opacity: 0.9;
     }
 
-    .verified-dot {
-      width: 9px;
-      height: 9px;
+    .dot {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: #33ff66;
-      box-shadow: 0px 0px 8px rgba(51, 255, 102, 0.8),
-                  0px 0px 18px rgba(51, 255, 102, 0.55),
-                  0px 0px 35px rgba(51, 255, 102, 0.35);
-      animation: pulseGlow 1.6s infinite ease-in-out;
     }
 
-    .verified-dot.red {
-      background: #ff2f2f;
-      box-shadow: 0px 0px 8px rgba(255, 47, 47, 0.85),
-                  0px 0px 18px rgba(255, 47, 47, 0.60),
-                  0px 0px 35px rgba(255, 47, 47, 0.40);
+    .dot.green {
+      background: #00ff73;
+      box-shadow: 0px 0px 12px rgba(0,255,115,0.8);
     }
 
-    @keyframes pulseGlow {
-      0% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.3); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.9; }
+    .dot.red {
+      background: #ff3b3b;
+      box-shadow: 0px 0px 12px rgba(255,59,59,0.8);
+    }
+
+    .dot.purple {
+      background: #b35cff;
+      box-shadow: 0px 0px 12px rgba(179,92,255,0.75);
     }
 
     /* модальное окно */
@@ -453,7 +407,7 @@
     }
 
     .close-btn:hover {
-      transform: scale(1.08);
+      transform: scale(1.05);
       border: 1px solid rgba(255,255,255,0.25);
     }
 
@@ -476,9 +430,9 @@
     }
 
     .plan:hover {
-      transform: translateY(-3px) scale(1.03);
+      transform: translateY(-2px);
       border: 1px solid rgba(255,255,255,0.20);
-      box-shadow: 0px 0px 30px rgba(0, 140, 255, 0.22);
+      box-shadow: 0px 0px 25px rgba(0, 140, 255, 0.20);
     }
 
     .plan span {
@@ -488,7 +442,7 @@
     .price {
       font-size: 15px;
       font-weight: 900;
-      opacity: 0.95;
+      opacity: 0.9;
       background: linear-gradient(90deg, #c084fc, #60a5fa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -501,77 +455,50 @@
       text-align: center;
     }
 
-    /* кастомное уведомление */
+    /* уведомление */
     .toast {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 340px;
-      padding: 18px 18px;
-      border-radius: 20px;
-      background: rgba(20, 10, 35, 0.92);
+      top: 25px;
+      right: 25px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(20, 10, 35, 0.95);
       border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(18px);
-      box-shadow: 0px 0px 55px rgba(255, 40, 40, 0.25);
-      z-index: 9999;
-      transform: translateX(400px);
+      box-shadow: 0px 0px 40px rgba(255, 0, 70, 0.25);
+      z-index: 99999;
+      min-width: 260px;
       opacity: 0;
-      transition: 0.4s ease;
+      transform: translateY(-10px);
+      transition: 0.35s ease;
+      pointer-events: none;
     }
 
-    .toast.active {
-      transform: translateX(0px);
+    .toast.show {
       opacity: 1;
+      transform: translateY(0px);
     }
 
     .toast-title {
-      font-size: 15px;
       font-weight: 900;
+      font-size: 15px;
       margin-bottom: 6px;
-      color: #ff4d4d;
-      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #ff5c8a, #ff3b3b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .toast-text {
       font-size: 13px;
-      opacity: 0.85;
+      opacity: 0.75;
       line-height: 1.4;
-    }
-
-    .toast-line {
-      margin-top: 12px;
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .toast-progress {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, rgba(255,60,60,0.85), rgba(255,0,120,0.55));
-      animation: toastProgress 3.5s linear forwards;
-    }
-
-    @keyframes toastProgress {
-      from { width: 100%; }
-      to { width: 0%; }
-    }
-
-    @media (max-width: 520px) {
-      .title { font-size: 52px; }
-      .btn { width: 100%; justify-content: center; }
-      .main-buttons { width: 100%; }
-      .toast { width: 90%; right: 5%; }
     }
   </style>
 </head>
 
 <body>
 
-  <div id="particles-js"></div>
-  <div class="grain"></div>
+  <canvas id="particles"></canvas>
 
   <div class="bg-blur one"></div>
   <div class="bg-blur two"></div>
@@ -581,190 +508,172 @@
     <!-- Главная -->
     <div id="homeSection" class="section active">
       <div class="title">Zarro Team</div>
-      <div class="subtitle">Элегантный магазин подписок ZarroClient</div>
+      <div class="subtitle">Премиум-магазин ZarroClient • продукты • аккаунты</div>
 
       <div class="main-buttons">
         <button class="btn primary" onclick="openProducts()">Доступные товары</button>
+        <button class="btn" onclick="openFree()">Бесплатные продукты</button>
         <button class="btn" onclick="openTelegram()">Телеграм канал</button>
-        <button class="btn secondary" onclick="openFreeProducts()">Бесплатные продукты</button>
       </div>
     </div>
 
-    <!-- Платные товары -->
+    <!-- Доступные товары -->
     <div id="productsSection" class="section">
       <div class="back-btn" onclick="goHome()">← Назад</div>
 
-      <div class="category-title">Наши продукты</div>
+      <div class="block-title">Наши продукты</div>
       <div class="products-grid">
+
         <div class="card" onclick="openModal('vimeworld')">
           <div class="card-title">ZarroClient (VimeWorld)</div>
-          <div class="card-desc">
-            Подписка на ZarroClient для VimeWorld. Максимальная стабильность, плавность и стиль.
-          </div>
+          <div class="card-desc">Подписка на ZarroClient для VimeWorld. Максимальная стабильность, плавность и стиль.</div>
           <div class="card-tag">VimeWorld Edition</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot green"></div>
+            <div id="dateVime" class="status-text"></div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('minecraft')">
           <div class="card-title">ZarroClient (Minecraft)</div>
-          <div class="card-desc">
-            Версия клиента для Minecraft. Оптимизация, удобство, интерфейс и мощный функционал.
-          </div>
+          <div class="card-desc">Версия клиента для Minecraft. Оптимизация, удобство, интерфейс и мощный функционал.</div>
           <div class="card-tag">Minecraft Edition</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot green"></div>
+            <div id="dateMc" class="status-text"></div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('full')">
           <div class="card-title">ZarroClient (FULL)</div>
-          <div class="card-desc">
-            Полный доступ ко всем версиям. Лучший выбор для тех, кто хочет всё и сразу.
-          </div>
+          <div class="card-desc">Полный доступ ко всем версиям. Лучший выбор для тех, кто хочет всё и сразу.</div>
           <div class="card-tag">Ultimate Access</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot green"></div>
+            <div id="dateFull" class="status-text"></div>
           </div>
         </div>
+
       </div>
 
-      <div class="category-title">Аккаунты VimeWorld</div>
+      <div class="block-title">Аккаунты VimeWorld</div>
       <div class="products-grid">
-        <div class="card" onclick="openModal('holy_mail')">
-          <div class="card-title">Аккаунт Holy VimeWorld (с почтой)</div>
-          <div class="card-desc">
-            Аккаунт Holy VimeWorld с почтой. Полный доступ, надежная передача.
-          </div>
-          <div class="card-tag">VimeWorld Account</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+        <div class="card" onclick="openModal('holy_mail')">
+          <div class="card-title">Holy VimeWorld (с почтой)</div>
+          <div class="card-desc">Оригинальный аккаунт VimeWorld. Полный доступ + почта.</div>
+          <div class="card-tag">Аккаунт VimeWorld</div>
+
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 7 шт.</div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('immortal_mail')">
-          <div class="card-title">Аккаунт Immortal (с почтой)</div>
-          <div class="card-desc">
-            Immortal аккаунт с почтой. Максимальная ценность и топ статус.
-          </div>
-          <div class="card-tag">Premium Account</div>
+          <div class="card-title">Immortal VimeWorld (с почтой)</div>
+          <div class="card-desc">Топовый статус Immortal. Полный доступ + почта.</div>
+          <div class="card-tag">Аккаунт VimeWorld</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 5 шт.</div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('holy_nomail')">
-          <div class="card-title">Аккаунт Holy (без почты)</div>
-          <div class="card-desc">
-            Holy аккаунт без почты. Быстро и дешево.
-          </div>
-          <div class="card-tag">Fast Delivery</div>
+          <div class="card-title">Holy VimeWorld (без почты)</div>
+          <div class="card-desc">Аккаунт VimeWorld Holy. Быстрое получение, без почты.</div>
+          <div class="card-tag">Аккаунт VimeWorld</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 9 шт.</div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('immortal_nomail')">
-          <div class="card-title">Аккаунт Immortal (без почты)</div>
-          <div class="card-desc">
-            Immortal аккаунт без почты. Отличная цена за легендарный статус.
-          </div>
-          <div class="card-tag">Legend Account</div>
+          <div class="card-title">Immortal VimeWorld (без почты)</div>
+          <div class="card-desc">Аккаунт Immortal. Лучший выбор, если хочешь максималку.</div>
+          <div class="card-tag">Аккаунт VimeWorld</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 6 шт.</div>
           </div>
         </div>
+
       </div>
 
-      <div class="category-title">Аккаунты Minecraft</div>
+      <div class="block-title">Аккаунты Minecraft</div>
       <div class="products-grid">
-        <div class="card" onclick="openModal('mc_mail')">
-          <div class="card-title">Лицензионный аккаунт Minecraft (с почтой)</div>
-          <div class="card-desc">
-            Лицензионный аккаунт Minecraft с почтой. Полный доступ, смена данных.
-          </div>
-          <div class="card-tag">Minecraft License</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+        <div class="card" onclick="openModal('mc_mail')">
+          <div class="card-title">Лицензионный Minecraft (с почтой)</div>
+          <div class="card-desc">Полный доступ к Minecraft лицензии + почта.</div>
+          <div class="card-tag">Minecraft Account</div>
+
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 8 шт.</div>
           </div>
         </div>
 
         <div class="card" onclick="openModal('mc_nomail')">
-          <div class="card-title">Лицензионный аккаунт Minecraft (без почты)</div>
-          <div class="card-desc">
-            Дешевый лицензионный аккаунт Minecraft без почты.
-          </div>
-          <div class="card-tag">Cheap License</div>
+          <div class="card-title">Лицензионный Minecraft (без почты)</div>
+          <div class="card-desc">Дешёвый вариант лицензии. Быстрое получение.</div>
+          <div class="card-tag">Minecraft Account</div>
 
-          <div class="verified">
-            <div class="verified-dot"></div>
-            <div class="verified-text" data-status="work">[Дата] Проверено, работает</div>
+          <div class="status-line">
+            <div class="dot purple"></div>
+            <div class="status-text">Осталось: 10 шт.</div>
           </div>
         </div>
+
       </div>
 
     </div>
 
-    <!-- Бесплатные продукты -->
-    <div id="freeProductsSection" class="section">
+    <!-- Бесплатные -->
+    <div id="freeSection" class="section">
       <div class="back-btn" onclick="goHome()">← Назад</div>
 
-      <div class="category-title">Бесплатные продукты</div>
-
+      <div class="block-title">Бесплатные продукты</div>
       <div class="products-grid">
-        <div class="card" onclick="showNotWorkingMessage()">
+
+        <div class="card" onclick="showUnavailable()">
           <div class="card-title">ZarroOptimizer</div>
-          <div class="card-desc">
-            Бесплатный оптимизатор интернета. Улучшает стабильность соединения и уменьшает задержки.
-          </div>
-          <div class="card-tag">Free Utility</div>
-
-          <div class="verified">
-            <div class="verified-dot red"></div>
-            <div class="verified-text" data-status="notwork">[Дата] Не работает</div>
-          </div>
-        </div>
-
-        <div class="card" onclick="showNotWorkingMessage()">
-          <div class="card-title">ZClicker</div>
-          <div class="card-desc">
-            Авто-кликер от Zarro Team. (Временно недоступен)
-          </div>
+          <div class="card-desc">Оптимизатор интернета. Улучшает пинг и стабильность соединения.</div>
           <div class="card-tag">Free Tool</div>
 
-          <div class="verified">
-            <div class="verified-dot red"></div>
-            <div class="verified-text" data-status="notwork">[Дата] Не работает</div>
+          <div class="status-line">
+            <div class="dot red"></div>
+            <div id="dateOpt" class="status-text"></div>
           </div>
         </div>
 
-        <div class="card" onclick="showNotWorkingMessage()">
-          <div class="card-title">ZInjector</div>
-          <div class="card-desc">
-            Инжектор для модулей Zarro Team. (Временно недоступен)
-          </div>
-          <div class="card-tag">Injector</div>
+        <div class="card" onclick="showUnavailable()">
+          <div class="card-title">ZClicker</div>
+          <div class="card-desc">Автокликер для удобного фарма. Сейчас временно недоступен.</div>
+          <div class="card-tag">Free Tool</div>
 
-          <div class="verified">
-            <div class="verified-dot red"></div>
-            <div class="verified-text" data-status="notwork">[Дата] Не работает</div>
+          <div class="status-line">
+            <div class="dot red"></div>
+            <div id="dateClick" class="status-text"></div>
+          </div>
+        </div>
+
+        <div class="card" onclick="showUnavailable()">
+          <div class="card-title">ZInjector</div>
+          <div class="card-desc">Инжектор для запуска продуктов. Сейчас в доработке.</div>
+          <div class="card-tag">Free Tool</div>
+
+          <div class="status-line">
+            <div class="dot red"></div>
+            <div id="dateInj" class="status-text"></div>
           </div>
         </div>
 
@@ -791,29 +700,46 @@
 
   <!-- Toast -->
   <div id="toast" class="toast">
-    <div class="toast-title" id="toastTitle">Ошибка</div>
-    <div class="toast-text" id="toastText">Сообщение</div>
-    <div class="toast-line">
-      <div class="toast-progress"></div>
-    </div>
+    <div class="toast-title">Недоступно</div>
+    <div class="toast-text">Извините, на данный момент товар не работает и не доступен для скачивания.</div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <script>
     const homeSection = document.getElementById("homeSection");
     const productsSection = document.getElementById("productsSection");
-    const freeProductsSection = document.getElementById("freeProductsSection");
+    const freeSection = document.getElementById("freeSection");
 
     const modalOverlay = document.getElementById("modalOverlay");
     const modalTitle = document.getElementById("modalTitle");
     const modalPlans = document.getElementById("modalPlans");
 
     const toast = document.getElementById("toast");
-    const toastTitle = document.getElementById("toastTitle");
-    const toastText = document.getElementById("toastText");
 
     const SALES_MANAGER = "SalesManagerX";
+
+    function getCurrentDate() {
+      const d = new Date();
+      const day = String(d.getDate()).padStart(2, "0");
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const year = d.getFullYear();
+      return `[${day}.${month}.${year}]`;
+    }
+
+    function setDates() {
+      const date = getCurrentDate();
+
+      // продукты (работает)
+      document.getElementById("dateVime").innerText = `${date} Проверено, работает`;
+      document.getElementById("dateMc").innerText = `${date} Проверено, работает`;
+      document.getElementById("dateFull").innerText = `${date} Проверено, работает`;
+
+      // бесплатные (не работает)
+      document.getElementById("dateOpt").innerText = `${date} Не работает`;
+      document.getElementById("dateClick").innerText = `${date} Не работает`;
+      document.getElementById("dateInj").innerText = `${date} Не работает`;
+    }
+
+    setDates();
 
     const productsData = {
       vimeworld: {
@@ -842,59 +768,47 @@
       },
 
       holy_mail: {
-        title: "Аккаунт Holy VimeWorld (с почтой)",
-        plans: [
-          { name: "Покупка аккаунта", price: "699₽" }
-        ]
+        title: "Holy VimeWorld (с почтой)",
+        plans: [{ name: "Купить", price: "699₽" }]
       },
       immortal_mail: {
-        title: "Аккаунт Immortal (с почтой)",
-        plans: [
-          { name: "Покупка аккаунта", price: "2999₽" }
-        ]
+        title: "Immortal VimeWorld (с почтой)",
+        plans: [{ name: "Купить", price: "2999₽" }]
       },
       holy_nomail: {
-        title: "Аккаунт Holy (без почты)",
-        plans: [
-          { name: "Покупка аккаунта", price: "499₽" }
-        ]
+        title: "Holy VimeWorld (без почты)",
+        plans: [{ name: "Купить", price: "499₽" }]
       },
       immortal_nomail: {
-        title: "Аккаунт Immortal (без почты)",
-        plans: [
-          { name: "Покупка аккаунта", price: "1499₽" }
-        ]
+        title: "Immortal VimeWorld (без почты)",
+        plans: [{ name: "Купить", price: "1499₽" }]
       },
 
       mc_mail: {
-        title: "Лицензионный аккаунт Minecraft (с почтой)",
-        plans: [
-          { name: "Покупка аккаунта", price: "999₽" }
-        ]
+        title: "Лицензионный Minecraft (с почтой)",
+        plans: [{ name: "Купить", price: "999₽" }]
       },
       mc_nomail: {
-        title: "Лицензионный аккаунт Minecraft (без почты)",
-        plans: [
-          { name: "Покупка аккаунта", price: "199₽" }
-        ]
+        title: "Лицензионный Minecraft (без почты)",
+        plans: [{ name: "Купить", price: "199₽" }]
       }
     };
 
     function openProducts() {
       homeSection.classList.remove("active");
-      freeProductsSection.classList.remove("active");
+      freeSection.classList.remove("active");
       productsSection.classList.add("active");
     }
 
-    function openFreeProducts() {
+    function openFree() {
       homeSection.classList.remove("active");
       productsSection.classList.remove("active");
-      freeProductsSection.classList.add("active");
+      freeSection.classList.add("active");
     }
 
     function goHome() {
       productsSection.classList.remove("active");
-      freeProductsSection.classList.remove("active");
+      freeSection.classList.remove("active");
       homeSection.classList.add("active");
     }
 
@@ -932,121 +846,88 @@
     }
 
     function closeModalOutside(event) {
-      if (event.target === modalOverlay) {
-        closeModal();
-      }
+      if (event.target === modalOverlay) closeModal();
     }
 
     function sendToSales(productName, days, price) {
       const message =
         "Здравствуйте! Хочу купить товар.\n\n" +
         "📌 Товар: " + productName + "\n" +
-        "⏳ Тариф: " + days + "\n" +
+        "⏳ Срок/Тип: " + days + "\n" +
         "💰 Цена: " + price + "\n\n" +
         "Подскажите способы оплаты.";
 
       const telegramLink = "https://t.me/" + SALES_MANAGER + "?text=" + encodeURIComponent(message);
-
       window.open(telegramLink, "_blank");
       closeModal();
     }
 
-    function getCurrentDate() {
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, "0");
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const year = now.getFullYear();
-      return `${day}.${month}.${year}`;
-    }
-
-    function setStatusDates() {
-      const date = getCurrentDate();
-
-      document.querySelectorAll("[data-status='work']").forEach(el => {
-        el.innerText = `[${date}] Проверено, работает`;
-      });
-
-      document.querySelectorAll("[data-status='notwork']").forEach(el => {
-        el.innerText = `[${date}] Не работает`;
-      });
-    }
-
-    function showToast(title, text) {
-      toastTitle.innerText = title;
-      toastText.innerText = text;
-
-      toast.classList.add("active");
-
-      const progress = toast.querySelector(".toast-progress");
-      progress.style.animation = "none";
-      progress.offsetHeight;
-      progress.style.animation = "toastProgress 3.5s linear forwards";
+    function showUnavailable() {
+      toast.classList.add("show");
 
       setTimeout(() => {
-        toast.classList.remove("active");
+        toast.classList.remove("show");
       }, 3500);
     }
-
-    function showNotWorkingMessage() {
-      showToast(
-        "Недоступно",
-        "Извините, на данный момент товар не работает и не доступен для скачивания."
-      );
-    }
-
-    setStatusDates();
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeModal();
     });
 
-    particlesJS("particles-js", {
-      "particles": {
-        "number": {
-          "value": 140,
-          "density": { "enable": true, "value_area": 900 }
-        },
-        "color": { "value": ["#a855f7", "#60a5fa", "#ffffff"] },
-        "shape": { "type": "circle" },
-        "opacity": {
-          "value": 0.40,
-          "random": true
-        },
-        "size": {
-          "value": 3,
-          "random": true
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 160,
-          "color": "#a855f7",
-          "opacity": 0.16,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 1.6,
-          "direction": "none",
-          "random": true,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false
-        }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
-          "onclick": { "enable": true, "mode": "push" },
-          "resize": true
-        },
-        "modes": {
-          "repulse": { "distance": 115, "duration": 0.4 },
-          "push": { "particles_nb": 4 }
-        }
-      },
-      "retina_detect": true
-    });
+    /* ====== ЧАСТИЦЫ ====== */
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createParticles() {
+      particles = [];
+      const count = Math.floor((window.innerWidth + window.innerHeight) / 6);
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2 + 0.5,
+          speedX: (Math.random() - 0.5) * 0.4,
+          speedY: (Math.random() - 0.5) * 0.4,
+          alpha: Math.random() * 0.5 + 0.1
+        });
+      }
+    }
+
+    createParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
   </script>
 
 </body>
